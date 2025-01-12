@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Receipt {
+public class Receipt { // Class is unnecessary, should be removed, duplicate of ShoppingCart
 
     private final List<ReceiptItem> items = new ArrayList<>();
     private final List<Discount> discounts = new ArrayList<>();
