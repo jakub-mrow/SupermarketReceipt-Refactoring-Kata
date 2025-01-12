@@ -8,31 +8,48 @@ import java.util.Map;
 
 public class ShoppingCart {
 
-    private final List<ProductQuantity> items = new ArrayList<>();
+    private final List<ProductQuantity> items = new ArrayList<>(); 
+    // Code smell: Duplicated code, may not sync with productQuantities
+    // Solution: Remove the field and use the items field instead
     private final Map<Product, Double> productQuantities = new HashMap<>();
 
     List<ProductQuantity> getItems() {
         return Collections.unmodifiableList(items);
     }
 
-    void addItem(Product product) {
+    void addItem(Product product) { 
+        // Method not used
+        // Solution: Remove the method
         addItemQuantity(product, 1.0);
     }
 
     Map<Product, Double> productQuantities() {
         return Collections.unmodifiableMap(productQuantities);
+        // Code smell: Duplicated code, may not sync with items
+        // Solution: Remove the field and use the items field instead
     }
 
     public void addItemQuantity(Product product, double quantity) {
-        items.add(new ProductQuantity(product, quantity));
-        if (productQuantities.containsKey(product)) {
+        // Code smell: Name does not describe what the method does
+        // Solution: Rename the method to a more descriptive name for example "addCartItem"
+
+
+        items.add(new ProductQuantity(product, quantity)); // have to detect if product is already in the list
+        if (productQuantities.containsKey(product)) { // Code smell: Duplicated code, may not sync with items
+            // Solution: Remove the field and use the items field instead
             productQuantities.put(product, productQuantities.get(product) + quantity);
         } else {
             productQuantities.put(product, quantity);
         }
     }
 
-    void handleOffers(Receipt receipt, Map<Product, Offer> offers, SupermarketCatalog catalog) {
+    //should implement total price calculation method
+
+    void handleOffers(Receipt receipt, Map<Product, Offer> offers, SupermarketCatalog catalog) { 
+        // Strategy pattern should be used here depending on the offer type
+        // Method is too long
+        // Discount should be applied on an item from a cart
+
         for (Product p: productQuantities().keySet()) {
             double quantity = productQuantities.get(p);
             if (offers.containsKey(p)) {
